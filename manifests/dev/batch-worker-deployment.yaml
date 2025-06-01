@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: batch-worker
+  namespace: default
+  labels:
+    app: batch
+    component: worker
+    tier: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: batch
+      component: worker
+  template:
+    metadata:
+      labels:
+        app: batch
+        component: worker
+    spec:
+      containers:
+      - name: batch-worker
+        image: batch:dev
+        imagePullPolicy: IfNotPresent
+        command: ["celery", "-A", "celery_worker", "worker", "--loglevel=info"]
+        env:
+        - name: REDIS_HOST
+          value: "redis"
+        - name: REDIS_PORT
+          value: "6379"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 200m
+            memory: 256Mi
+        volumeMounts:
+        - name: uploads
+          mountPath: /app/uploads
+      volumes:
+      - name: uploads
+        emptyDir: {}

@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: batch-api
+  namespace: default
+  labels:
+    app: batch
+    component: api
+    tier: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: batch
+      component: api
+  template:
+    metadata:
+      labels:
+        app: batch
+        component: api
+    spec:
+      containers:
+      - name: batch-api
+        image: batch:dev
+        imagePullPolicy: IfNotPresent
+        command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
+        env:
+        - name: REDIS_HOST
+          value: "redis"
+        - name: REDIS_PORT
+          value: "6379"
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 200m
+            memory: 256Mi
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 20
+          periodSeconds: 20
+        volumeMounts:
+        - name: uploads
+          mountPath: /app/uploads
+      volumes:
+      - name: uploads
+        emptyDir: {}
