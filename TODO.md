@@ -48,12 +48,12 @@
 - [x] Test the service with port-forward and curl
 
 ## 6. Implement Additional Services
-- [ ] Build thumb-service (Node.js + Sharp)
+- [x] Build thumb-service (Node.js + Sharp)
 - [ ] Build markdown-batch (FastAPI + Celery + Redis)
 - [ ] Build echo-ws (Rust Actix)
 - [ ] Build metrics-frontend (React + Prometheus API)
-- [ ] Create Dockerfiles for each service
-- [ ] Write K8s manifests for each service
+- [x] Create Dockerfiles for each service (2/4 completed)
+- [x] Write K8s manifests for each service (2/4 completed)
 
 ## 7. Resource Experimentation
 - [ ] Adjust resource limits to observe OOMKilled/throttling

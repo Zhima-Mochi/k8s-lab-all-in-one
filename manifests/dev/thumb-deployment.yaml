@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thumb
+  namespace: default
+  labels:
+    app: thumb
+    tier: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: thumb
+  template:
+    metadata:
+      labels:
+        app: thumb
+    spec:
+      containers:
+      - name: thumb
+        image: thumb:dev
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 200m
+            memory: 256Mi
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 20
+          periodSeconds: 20
