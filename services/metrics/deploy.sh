@@ -48,5 +48,5 @@ echo "Deployment complete. Checking status..."
 kubectl get pods -l app=metrics
 
 echo "To access the metrics dashboard:"
-echo "kubectl port-forward svc/metrics 8080:80"
-echo "Then open http://localhost:8080 in your browser"
+echo "kubectl port-forward svc/metrics 8004:80"
+echo "Then open http://localhost:8004 in your browser"

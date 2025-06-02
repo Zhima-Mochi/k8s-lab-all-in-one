@@ -50,5 +50,5 @@ echo "Deployment complete. Checking status..."
 kubectl get pods -l app=echo
 
 echo "To access the echo WebSocket service:"
-echo "kubectl port-forward svc/echo 8080:8080"
-echo "Then you can use a browser to access http://localhost:8080"
+echo "kubectl port-forward svc/echo 8003:8080"
+echo "Then you can use a browser to access http://localhost:8003"

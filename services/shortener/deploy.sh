@@ -50,5 +50,5 @@ echo "Deployment complete. Checking status..."
 kubectl get pods -l app=shortener
 
 echo "To access the shortener service:"
-echo "kubectl port-forward svc/shortener 8080:80"
-echo "Then you can use curl or a browser to access http://localhost:8080"
+echo "kubectl port-forward svc/shortener 8000:80"
+echo "Then you can use curl or a browser to access http://localhost:8000"

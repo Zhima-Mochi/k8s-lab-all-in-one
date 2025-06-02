@@ -69,5 +69,5 @@ kubectl get pods -l app=batch-worker
 kubectl get pods -l app=redis
 
 echo "To access the batch-api service:"
-echo "kubectl port-forward svc/batch-api 8080:80"
-echo "Then you can use curl or a browser to access http://localhost:8080"
+echo "kubectl port-forward svc/batch-api 8002:80"
+echo "Then you can use curl or a browser to access http://localhost:8002"
