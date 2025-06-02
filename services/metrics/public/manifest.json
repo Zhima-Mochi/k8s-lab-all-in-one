@@ -1,0 +1,9 @@
+{
+  "short_name": "K8s Metrics",
+  "name": "Kubernetes Metrics Dashboard",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

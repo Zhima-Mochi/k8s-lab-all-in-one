@@ -50,10 +50,10 @@
 ## 6. Implement Additional Services
 - [x] Build thumb-service (Node.js + Sharp)
 - [x] Build markdown-batch (FastAPI + Celery + Redis)
-- [ ] Build echo-ws (Rust Actix)
-- [ ] Build metrics-frontend (React + Prometheus API)
-- [x] Create Dockerfiles for each service (3/4 completed)
-- [x] Write K8s manifests for each service (3/4 completed)
+- [x] Build echo-ws (Rust Actix)
+- [x] Build metrics-frontend (React + Prometheus API)
+- [x] Create Dockerfiles for each service (5/5 completed)
+- [x] Write K8s manifests for each service (5/5 completed)
 
 ## 7. Resource Experimentation
 - [ ] Adjust resource limits to observe OOMKilled/throttling
