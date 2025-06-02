@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: batch-api
+  namespace: default
+  labels:
+    app: batch
+    component: api
+    tier: ha
+spec:
+  selector:
+    app: batch
+    component: api
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+  type: ClusterIP

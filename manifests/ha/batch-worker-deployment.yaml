@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: batch-worker
+  namespace: default
+  labels:
+    app: batch
+    component: worker
+    tier: ha
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: batch
+      component: worker
+  template:
+    metadata:
+      labels:
+        app: batch
+        component: worker
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - batch
+                - key: component
+                  operator: In
+                  values:
+                  - worker
+              topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: batch-worker
+        image: batch:latest
+        imagePullPolicy: IfNotPresent
+        command: ["celery", "-A", "celery_worker", "worker", "--loglevel=info"]
+        env:
+        - name: REDIS_HOST
+          value: "redis"
+        - name: REDIS_PORT
+          value: "6379"
+        resources:
+          requests:
+            cpu: 400m
+            memory: 512Mi
+          limits:
+            cpu: 800m
+            memory: 1Gi
+        volumeMounts:
+        - name: uploads
+          mountPath: /app/uploads
+      volumes:
+      - name: uploads
+        emptyDir: {}
