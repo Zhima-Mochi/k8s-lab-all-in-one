@@ -29,8 +29,11 @@ This project allows you to spin up a local multi-service lab that lets you exper
   - `dev/` - Development tier configurations
   - `standard/` - Standard tier configurations
   - `ha/` - High availability tier configurations
+  - `prometheus/` - Prometheus monitoring stack manifests (namespace, RBAC, kube-state-metrics, ConfigMap, Deployment, Service)
 - `charts/` - Helm charts
+- `deploy-prometheus.sh` - Script to deploy the Prometheus monitoring stack
+- Other helper scripts (`setup-cluster.sh`, `build-all.sh`, `deploy-all.sh`, `cleanup.sh`, etc.)
 
 ## Getting Started
 
-See the [TODO.md](TODO.md) file for a step-by-step guide to setting up and using this lab environment.
+See the [Getting Started guide](GETTING_STARTED.md) for step-by-step instructions on setting up, deploying, and monitoring the lab environment.

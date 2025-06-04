@@ -28,6 +28,9 @@ Here's a quick guide to get the entire lab environment up and running:
 
 # 3. Deploy all services to the development tier
 ./deploy-all.sh dev
+
+# 4. Deploy the Prometheus monitoring stack
+./deploy-prometheus.sh
 ```
 
 ## Step-by-Step Guide
@@ -81,7 +84,17 @@ Or deploy to other tiers:
 ./deploy-all.sh ha
 ```
 
-### 4. Access the Services
+### 4. Deploy Prometheus Monitoring
+
+Deploy the Prometheus monitoring stack to the `monitoring` namespace:
+
+```bash
+./deploy-prometheus.sh
+```
+
+This will apply the namespace, RBAC, kube-state-metrics, Prometheus ConfigMap, Deployment, and Service.
+
+### 5. Access the Services
 
 Use port-forwarding to access the services:
 
@@ -100,6 +113,9 @@ kubectl port-forward svc/echo 8003:8080
 
 # Metrics Dashboard
 kubectl port-forward svc/metrics 8004:80
+
+# Prometheus UI
+kubectl port-forward -n monitoring svc/prometheus 9090:9090
 ```
 
 ## Understanding the Services
@@ -224,7 +240,7 @@ After you've got the basic environment running, you can:
 
 1. Experiment with resource limits
 2. Set up Horizontal Pod Autoscalers
-3. Add Prometheus and Grafana for monitoring
+3. Deploy the Prometheus monitoring stack (`deploy-prometheus.sh`) and optionally add Grafana for visualization
 4. Explore node affinity and anti-affinity
 5. Create custom Helm charts
 
