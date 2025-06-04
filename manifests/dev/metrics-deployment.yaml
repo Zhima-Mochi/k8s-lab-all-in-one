@@ -44,6 +44,6 @@ spec:
           periodSeconds: 5
         env:
         - name: REACT_APP_PROMETHEUS_URL
-          value: "http://prometheus:9090/api/v1"
+          value: "http://prometheus.monitoring.svc.cluster.local:9090/api/v1"
         - name: REACT_APP_USE_MOCK_DATA
-          value: "true"
+          value: "false"
