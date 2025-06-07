@@ -1,0 +1,16 @@
+# Custom values for loki-stack Helm chart
+# Refer to the official chart documentation for all available options:
+# https://github.com/grafana/helm-charts/tree/main/charts/loki-stack
+
+# Example: Adjust resource requests/limits for Loki
+# loki:
+#   persistence:
+#     enabled: true
+#     size: 10Gi
+#   resources:
+#     requests:
+#       cpu: 100m
+#       memory: 256Mi
+#     limits:
+#       cpu: 500m
+#       memory: 1Gi

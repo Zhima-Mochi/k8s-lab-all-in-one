@@ -1,0 +1,48 @@
+# GitHub Actions CI Workflow for k8s-lab-all-in-one v2.0
+
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      # Add steps for building images, setting up kind, deploying charts, running load tests, etc.
+      # Example placeholder steps:
+      - name: Set up kind cluster
+        run: |
+          echo "Setting up kind cluster..."
+          # Actual kind setup commands will go here
+
+      - name: Build and push Docker images (placeholder)
+        run: |
+          echo "Building and pushing images..."
+          # Actual image build and push commands
+
+      - name: Deploy Helm charts (placeholder)
+        run: |
+          echo "Deploying Helm charts..."
+          # Actual helm deployment commands
+
+      - name: Run load tests (placeholder)
+        run: |
+          echo "Running load tests..."
+          # Actual load test commands
+
+      - name: Export metrics and upload artifact (placeholder)
+        run: |
+          echo "Exporting metrics and uploading artifact..."
+          # Actual metrics export and artifact upload commands
+          # mkdir -p results
+          # echo "test_results_placeholder" > results/ci_run_$(date +%s).json
+          # - uses: actions/upload-artifact@v3
+          #   with:
+          #     name: load-test-results
+          #     path: results/

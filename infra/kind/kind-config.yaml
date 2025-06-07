@@ -1,0 +1,20 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: k8s-lab
+
+# Optional: Configure nodes if needed
+# nodes:
+# - role: control-plane
+# - role: worker
+# - role: worker
+
+# Optional: Expose ports on the host
+# networking:
+#   apiServerAddress: "127.0.0.1"
+#   apiServerPort: 6443
+
+# Optional: Mount extra directories into the nodes
+# extraMounts:
+# - hostPath: /path/on/host
+#   containerPath: /path/in/container
+#   readOnly: true

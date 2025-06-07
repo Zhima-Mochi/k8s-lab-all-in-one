@@ -1,14 +1,19 @@
-# K8s Lab All-in-One
+# k8s-lab-all-in-one 2.0
 
-A local multi-service Kubernetes lab environment for experimenting with K8s resources in a safe sandbox.
+A plug-and-play sandbox for comparing resource configurations and usage for different project types on Kubernetes.
 
 ## Overview
 
-This project allows you to spin up a local multi-service lab that lets you experiment with Kubernetes resource configurations in a controlled environment.
+This project aims to provide a streamlined environment to:
+- Launch local or cloud Kubernetes clusters.
+- Deploy various workload types (Web, API, Batch, MQ-Consumer, ML-Job).
+- Automatically set up observability stacks (Prometheus, Grafana, Loki, Tempo).
+- Generate reproducible load patterns.
+- Export metrics for analysis.
 
 ## Prerequisites
 
-- Docker Desktop (or CLI)
+- Docker
 - Go 1.22+
 - Node 18+
 - Python 3.11+
@@ -17,23 +22,40 @@ This project allows you to spin up a local multi-service lab that lets you exper
 - Helm
 - k9s (optional)
 
-## Project Structure
+## Project Structure (v2.0)
 
-- `services/` - Microservice implementations
-  - `shortener/` - URL shortener service (Go)
-  - `thumb/` - Thumbnail service (Node.js + Sharp)
-  - `batch/` - Markdown batch processor (FastAPI + Celery + Redis)
-  - `echo/` - WebSocket echo service (Rust Actix)
-  - `metrics/` - Metrics frontend (React + Prometheus API)
-- `manifests/` - Kubernetes manifests
-  - `dev/` - Development tier configurations
-  - `standard/` - Standard tier configurations
-  - `ha/` - High availability tier configurations
-  - `prometheus/` - Prometheus monitoring stack manifests (namespace, RBAC, kube-state-metrics, ConfigMap, Deployment, Service)
-- `charts/` - Helm charts
-- `deploy-prometheus.sh` - Script to deploy the Prometheus monitoring stack
-- Other helper scripts (`setup-cluster.sh`, `build-all.sh`, `deploy-all.sh`, `cleanup.sh`, etc.)
+```
+k8s-lab-all-in-one/
+├── apps/                  # Source code or Dockerfile for workloads
+│   ├── web-go/
+│   ├── api-node/
+│   ├── batch-python/
+│   ├── mq-consumer-java/
+│   └── ml-job-pytorch/
+├── charts/                # Helm Charts for each application
+│   └── web-go/
+├── infra/                 # Infrastructure setup (kind, minikube, EKS)
+│   ├── kind/
+│   ├── minikube/
+│   └── eks/
+├── observability/         # Monitoring, logging, tracing configurations
+│   ├── prometheus-stack/
+│   ├── loki-stack/
+│   └── grafana-dashboards/
+├── load/                  # Load testing scripts
+│   ├── k6/
+│   └── stress/
+├── scripts/               # Utility scripts
+│   ├── up-kind.sh
+│   ├── load-test.sh
+│   └── export-metrics.py
+├── .github/workflows/     # CI/CD workflows
+│   └── ci.yaml
+└── README.md
+```
 
 ## Getting Started
 
-See the [Getting Started guide](GETTING_STARTED.md) for step-by-step instructions on setting up, deploying, and monitoring the lab environment.
+(To be updated for v2.0)
+
+For the original project (v1), see [README.v1.md](README.v1.md) (once created).
