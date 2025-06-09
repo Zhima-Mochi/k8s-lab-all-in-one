@@ -1,0 +1,82 @@
+{{- if eq .Values.job.type "CronJob" -}}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "batch-python.fullname" . }}
+  labels:
+    {{- include "batch-python.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.job.schedule | quote }}
+  {{- with .Values.job.startingDeadlineSeconds }}
+  startingDeadlineSeconds: {{ . }}
+  {{- end }}
+  concurrencyPolicy: {{ .Values.job.concurrencyPolicy | default "Allow" }}
+  successfulJobsHistoryLimit: {{ .Values.job.successfulJobsHistoryLimit | default 3 }}
+  failedJobsHistoryLimit: {{ .Values.job.failedJobsHistoryLimit | default 1 }}
+  jobTemplate:
+    spec:
+      template:
+        {{- include "batch-python.podtemplate" ( dict "Values" .Values "Chart" .Chart "Release" .Release "fullname" (include "batch-python.fullname" .) ) | nindent 8 }}
+{{- else -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "batch-python.fullname" . }}-{{ randAlphaNum 5 | lower }} # Add random suffix for multiple Job runs
+  labels:
+    {{- include "batch-python.labels" . | nindent 4 }}
+spec:
+  template:
+    {{- include "batch-python.podtemplate" ( dict "Values" .Values "Chart" .Chart "Release" .Release "fullname" (include "batch-python.fullname" .) ) | nindent 4 }}
+  {{- with .Values.job.backoffLimit }}
+  backoffLimit: {{ . }}
+  {{- end }}
+{{- end -}}
+
+{{- define "batch-python.podtemplate" -}}
+metadata:
+  labels:
+    {{- include "batch-python.selectorLabels" .Values | nindent 4 }}
+    # Add a unique label for tracking pods of a specific job run, especially for CronJobs
+    job-name: {{ .fullname }}
+  {{- with .Values.podAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  restartPolicy: {{ .Values.job.restartPolicy | default "OnFailure" }}
+  serviceAccountName: {{ include "batch-python.serviceAccountName" .Values }}
+  {{- with .Values.imagePullSecrets }}
+  imagePullSecrets:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  securityContext:
+    {{- toYaml .Values.podSecurityContext | nindent 4 }}
+  containers:
+    - name: {{ .Chart.Name }}
+      securityContext:
+        {{- toYaml .Values.securityContext | nindent 8 }}
+      image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+      imagePullPolicy: {{ .Values.image.pullPolicy }}
+      {{- if .Values.job.command }}
+      command:
+        {{- toYaml .Values.job.command | nindent 8 }}
+      {{- end }}
+      {{- if .Values.job.args }}
+      args:
+        {{- toYaml .Values.job.args | nindent 8 }}
+      {{- end }}
+      resources:
+        {{- toYaml .Values.resources | nindent 8 }}
+  {{- with .Values.nodeSelector }}
+  nodeSelector:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.affinity }}
+  affinity:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.tolerations }}
+  tolerations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end -}}

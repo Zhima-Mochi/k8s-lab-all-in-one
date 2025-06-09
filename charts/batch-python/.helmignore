@@ -1,0 +1,17 @@
+# Patterns to ignore when packaging Helm charts.
+
+# Common VCS files
+.git/
+.gitignore
+.svn/
+.hg/
+
+# Common editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS-specific files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,20 @@
+The batch-python {{ .Values.job.type }} has been deployed.
+
+{{- if eq .Values.job.type "Job" }}
+To check the status of the Job:
+  kubectl get job {{ include "batch-python.fullname" . }} -n {{ .Release.Namespace }}
+
+To see the logs from the Job's pod:
+  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "job-name={{ include "batch-python.fullname" . }}" -o jsonpath="{.items[0].metadata.name}")
+  kubectl logs $POD_NAME -n {{ .Release.Namespace }}
+{{- else if eq .Values.job.type "CronJob" }}
+To check the status of the CronJob:
+  kubectl get cronjob {{ include "batch-python.fullname" . }} -n {{ .Release.Namespace }}
+
+CronJob will create Jobs based on the schedule: {{ .Values.job.schedule | quote }}
+
+To see the logs from the pods created by the CronJob, first find a pod:
+  kubectl get pods --namespace {{ .Release.Namespace }} -l "job-name={{ include "batch-python.fullname" . }}"
+Then view logs for a specific pod:
+  kubectl logs <pod-name> -n {{ .Release.Namespace }}
+{{- end }}

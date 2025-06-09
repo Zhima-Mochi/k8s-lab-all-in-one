@@ -1,0 +1,12 @@
+The api-node application has been deployed.
+
+To access your application:
+
+1. Get the pod name:
+   export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "api-node.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+
+2. Port-forward to the pod (replace 8080 with your desired local port):
+   echo "Visit http://127.0.0.1:8080 to use your application"
+   kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8080:{{ .Values.service.targetPort }}
+
+Alternatively, if you have an Ingress controller and configured Ingress in values.yaml, you can access it via the Ingress host.

@@ -1,0 +1,73 @@
+# Default values for batch-python.
+
+image:
+  repository: your-repo/batch-python # Replace with your image repository
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+# Job specific configuration
+job:
+  # Type of job to create: "Job" or "CronJob"
+  type: Job # or CronJob
+  # Schedule for CronJob (e.g., "*/5 * * * *") - required if type is CronJob
+  schedule: ""
+  # Specifies the GID for the entrypoint
+  # fsGroup: 2000
+
+  # Command and arguments for the container
+  # If not specified, the Docker image's CMD will be used
+  command: [] # e.g., ["python", "main.py"]
+  args: []    # e.g., ["--input", "/data/input.txt"]
+
+  # Restart policy for Job: Never, OnFailure
+  restartPolicy: OnFailure
+
+  # For CronJob: specifies how to treat concurrent executions of a Job
+  # Allow, Forbid, Replace
+  concurrencyPolicy: Allow
+  # Optional deadline in seconds for starting the job if it misses its scheduled time
+  startingDeadlineSeconds: null
+  # Limits the number of successful jobs to retain
+  successfulJobsHistoryLimit: 3
+  # Limits the number of failed jobs to retain
+  failedJobsHistoryLimit: 1
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with
+  # constrained resources, such as Minikube. If you do want to specify resources, uncomment
+  # the following lines, adjust them as necessary, and remove the curly braces.
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

@@ -16,3 +16,29 @@
 #       limits:
 #         cpu: 1
 #         memory: 2Gi
+
+grafana:
+  # Ensure Grafana is enabled (it is by default)
+  enabled: true
+  # Configure sidecar to watch for ConfigMaps with specific label for dashboards
+  sidecar:
+    dashboards:
+      enabled: true
+      # Label to look for in ConfigMap resources
+      label: grafana_dashboard
+      # Value of the label, if not specified, any value is accepted
+      labelValue: "1"
+      # Search in all namespaces
+      searchNamespace: ALL
+      # Folder annotation for dashboards
+      # folderAnnotation: grafana_folder
+      # Provider allows to use a specific organization, folder and type
+      # provider:
+      #   name: sidecar
+      #   orgId: 1
+      #   folder: ''
+      #   type: file
+      #   disableDelete: false
+      #   allowUiUpdates: false
+      #   # Interval to scan for ConfigMaps
+      #   updateIntervalSeconds: 10
